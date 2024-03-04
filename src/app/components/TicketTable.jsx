@@ -3,10 +3,10 @@ import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
 
 const TicketTable = ({ ticket, searchValue }) => {
-
   const handleChangeStatus = async (e) => {
     try {
       const status = e.target.value
+      console.log(status)
       const response = await fetch(
         `http://localhost:3000/api/v1/tickets/${searchValue}`,
         {
@@ -27,7 +27,7 @@ const TicketTable = ({ ticket, searchValue }) => {
       console.error('Error updating status:', error)
     }
   }
-  
+
   return (
     <section className='mx-12'>
       <Link
@@ -74,13 +74,6 @@ const TicketTable = ({ ticket, searchValue }) => {
         </table>
       </div>
       <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
-        <button
-          onClick={(e) => handleChangeStatus(e)}
-          value='confirmed'
-          className='px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md hover:scale-105'
-        >
-          Confirm
-        </button>
         <button
           onClick={(e) => handleChangeStatus(e)}
           value='completed'
