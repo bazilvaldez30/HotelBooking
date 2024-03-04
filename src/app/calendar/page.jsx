@@ -10,19 +10,48 @@ import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import { Modal } from 'antd'
 
-
-const testEvents = [
+const dummyReservation = [
   {
     id: 1,
-    title: 'TEST EVENT',
-    start: '2024-02-27T10:00:00',
-    end: '2024-02-29T12:00:00',
+    reservation_code: 'HT-0001',
+    start_date: '2024-03-30',
+    end_date: '2024-04-09',
+    asset_id: 1,
+    created_at: '2024-02-29T11:24:21.756Z',
+    updated_at: '2024-03-01T11:44:05.904Z',
+    price: '38000.0',
+    status: 'confirmed',
+    paid: false,
+    asset: {
+      id: 1,
+      name: 'Dagupan Suite',
+      asset_code: 'DGP-SU',
+      price: 3800.0,
+      created_at: '2024-02-29T11:24:21.708Z',
+      updated_at: '2024-02-29T11:24:21.708Z',
+      description: 'Luxurious suite with modern amenities.',
+    },
   },
   {
     id: 2,
-    title: 'TEST 2',
-    start: '2024-02-27T10:00:00',
-    end: '2024-02-29T12:00:00',
+    reservation_code: 'HT-0002',
+    start_date: '2024-03-30',
+    end_date: '2024-04-09',
+    asset_id: 1,
+    created_at: '2024-02-29T11:24:21.756Z',
+    updated_at: '2024-03-01T11:44:05.904Z',
+    price: '38000.0',
+    status: 'completed',
+    paid: false,
+    asset: {
+      id: 1,
+      name: 'Dagupan Suite',
+      asset_code: 'DGP-SU',
+      price: 3800.0,
+      created_at: '2024-02-29T11:24:21.708Z',
+      updated_at: '2024-02-29T11:24:21.708Z',
+      description: 'Luxurious suite with modern amenities.',
+    },
   },
 ]
 
@@ -30,18 +59,26 @@ export default function Calendar() {
   const [open, setOpen] = useState(false)
   const [selectedReservation, setSelectedReservation] = useState({})
   const [reservationsData, setReservationsData] = useState([])
+  const [calendarEvents, setCalendarEvents] = useState([])
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:3000/api/v1/reservations')
-      const reservation = await response.json()
-      setReservationsData(reservation)
+      /* const response = await fetch('http://localhost:3000/api/v1/reservations')
+      const reservations = await response.json() */
+
+      const calendarEvents = dummyReservation.map((reservation) => ({
+        id: reservation.id,
+        title: reservation.reservation_code,
+        start: reservation.start_date,
+        end: reservation.end_date,
+      }))
+
+      setCalendarEvents(calendarEvents)
+      setReservationsData(dummyReservation)
     }
 
     fetchData()
   }, [])
-
-  console.log(reservationsData)
 
   const handleHover = (e) => {
     try {
@@ -63,7 +100,6 @@ export default function Calendar() {
     setOpen(true)
   }
 
-
   return (
     <section>
       <div className='text-center py-[60px]'>
@@ -79,7 +115,7 @@ export default function Calendar() {
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView='dayGridMonth'
             selectable={false}
-            events={testEvents}
+            events={calendarEvents}
             eventClick={(e) => eventClick(e)}
             eventMouseEnter={(e) => handleHover(e)}
             eventClassNames={'cursor-pointer'}

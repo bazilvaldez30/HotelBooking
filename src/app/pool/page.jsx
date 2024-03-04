@@ -5,6 +5,7 @@ import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import Scanner from '../components/Scanner'
 import TicketTable from '../components/TicketTable'
+import { notification } from 'antd'
 
 const dummyTicket = {
   id: 11,
@@ -24,11 +25,24 @@ export default function Page() {
   const [ticket, setTicket] = useState(null)
 
   const handleSubmit = async () => {
-    const response = await fetch(
-      `http://localhost:3000/api/v1/tickets/${searchValue}`
-    )
-    const json = await response.json()
-    setTicket(json)
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/tickets/${searchValue}`
+      )
+
+      if (!response.ok) {
+        notification['error']({
+          placement: 'top',
+          message: 'No ticket found',
+        })
+        throw new Error('Failed to fetch ticket data')
+      }
+
+      const json = await response.json()
+      setTicket(json)
+    } catch (error) {
+      console.error('Error fetching ticket data:', error)
+    }
   }
 
   return (
@@ -43,14 +57,21 @@ export default function Page() {
             setSearchValue={setSearchValue}
           />
           <button
+            disabled={!searchValue}
             onClick={handleSubmit}
-            className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl'
+            className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:opacity-70 disabled:cursor-not-allowed'
           >
             Submit
           </button>
         </div>
       )}
-      {ticket && <TicketTable ticket={ticket} searchValue={searchValue} />}
+      {ticket && (
+        <TicketTable
+          ticket={ticket}
+          setTicket={setTicket}
+          searchValue={searchValue}
+        />
+      )}
     </section>
   )
 }

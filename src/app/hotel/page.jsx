@@ -33,11 +33,20 @@ export default function Page() {
   const [reservation, setReservation] = useState(null)
 
   const handleSubmit = async () => {
-    const response = await fetch(
-      `http://localhost:3000/api/v1/reservations/${searchValue}`
-    )
-    const json = await response.json()
-    setReservation(json)
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/reservations/${searchValue}`
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch reservation data')
+      }
+
+      const json = await response.json()
+      setReservation(json)
+    } catch (error) {
+      console.error('Error fetching reservation data:', error)
+    }
   }
 
   return (
@@ -53,13 +62,17 @@ export default function Page() {
 
         <button
           onClick={handleSubmit}
-          className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl'
+          className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:opacity-70 disabled:cursor-not-allowed'
         >
           Submit
         </button>
       </div>
       {reservation && (
-        <ReservationTable reservation={reservation} searchValue={searchValue} />
+        <ReservationTable
+          reservation={reservation}
+          setReservation={setReservation}
+          searchValue={searchValue}
+        />
       )}
     </section>
   )

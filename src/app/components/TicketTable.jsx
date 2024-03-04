@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
 
-const TicketTable = ({ ticket, searchValue }) => {
+const TicketTable = ({ ticket, setTicket, searchValue }) => {
   const handleChangeStatus = async (e) => {
     try {
       const status = e.target.value
@@ -22,7 +22,7 @@ const TicketTable = ({ ticket, searchValue }) => {
         throw new Error('Failed to update status')
       }
       const json = await response.json()
-      console.log(json)
+      setTicket(json)
     } catch (error) {
       console.error('Error updating status:', error)
     }
@@ -73,22 +73,24 @@ const TicketTable = ({ ticket, searchValue }) => {
           </tbody>
         </table>
       </div>
-      <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
-        <button
-          onClick={(e) => handleChangeStatus(e)}
-          value='completed'
-          className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
-        >
-          Complete
-        </button>
-        <button
-          onClick={(e) => handleChangeStatus(e)}
-          value='cancelled'
-          className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
-        >
-          Cancel
-        </button>
-      </div>
+      {ticket.status === 'confirmed' && (
+        <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
+          <button
+            onClick={(e) => handleChangeStatus(e)}
+            value='completed'
+            className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
+          >
+            Complete
+          </button>
+          <button
+            onClick={(e) => handleChangeStatus(e)}
+            value='cancelled'
+            className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </section>
   )
 }

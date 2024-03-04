@@ -1,6 +1,10 @@
 import React from 'react'
 
-export default function ReservationTable({ reservation, searchValue }) {
+export default function ReservationTable({
+  reservation,
+  setReservation,
+  searchValue,
+}) {
   const handleChangeStatus = async (e) => {
     try {
       const status = e.target.value
@@ -18,7 +22,7 @@ export default function ReservationTable({ reservation, searchValue }) {
         throw new Error('Failed to update status')
       }
       const json = await response.json()
-      console.log(json)
+      setReservation(json)
     } catch (error) {
       console.error('Error updating status:', error)
     }
