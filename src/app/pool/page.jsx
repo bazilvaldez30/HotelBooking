@@ -25,7 +25,7 @@ export default function Page() {
 
   const handleSubmit = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/v1/reservations/${searchValue}`
+      `http://localhost:3000/api/v1/tickets/${searchValue}`
     )
     const json = await response.json()
     setTicket(json)

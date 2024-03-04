@@ -10,50 +10,6 @@ import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import { Modal } from 'antd'
 
-const reservation = [
-  {
-    id: 1,
-    reservation_code: 'HT-0001',
-    start_date: '2024-03-30',
-    end_date: '2024-04-09',
-    asset_id: 1,
-    created_at: '2024-02-29T11:24:21.756Z',
-    updated_at: '2024-03-01T11:44:05.904Z',
-    price: '38000.0',
-    status: 'confirmed',
-    paid: false,
-    asset: {
-      id: 1,
-      name: 'Dagupan Suite',
-      asset_code: 'DGP-SU',
-      price: 3800.0,
-      created_at: '2024-02-29T11:24:21.708Z',
-      updated_at: '2024-02-29T11:24:21.708Z',
-      description: 'Luxurious suite with modern amenities.',
-    },
-  },
-  {
-    id: 2,
-    reservation_code: 'HT-0002',
-    start_date: '2024-03-30',
-    end_date: '2024-04-09',
-    asset_id: 1,
-    created_at: '2024-02-29T11:24:21.756Z',
-    updated_at: '2024-03-01T11:44:05.904Z',
-    price: '38000.0',
-    status: 'completed',
-    paid: false,
-    asset: {
-      id: 1,
-      name: 'Dagupan Suite',
-      asset_code: 'DGP-SU',
-      price: 3800.0,
-      created_at: '2024-02-29T11:24:21.708Z',
-      updated_at: '2024-02-29T11:24:21.708Z',
-      description: 'Luxurious suite with modern amenities.',
-    },
-  },
-]
 
 const testEvents = [
   {
@@ -77,13 +33,15 @@ export default function Calendar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      /*  const response = await fetch('http://localhost:3000/api/v1/reservations')
-      const reservation = await response.json() */
+      const response = await fetch('http://localhost:3000/api/v1/reservations')
+      const reservation = await response.json()
       setReservationsData(reservation)
     }
 
     fetchData()
   }, [])
+
+  console.log(reservationsData)
 
   const handleHover = (e) => {
     try {
@@ -105,7 +63,6 @@ export default function Calendar() {
     setOpen(true)
   }
 
-  console.log(selectedReservation)
 
   return (
     <section>

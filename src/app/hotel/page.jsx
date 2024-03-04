@@ -33,10 +33,10 @@ export default function Page() {
   const [reservation, setReservation] = useState(null)
 
   const handleSubmit = async () => {
-    /*   const response = await fetch(
+    const response = await fetch(
       `http://localhost:3000/api/v1/reservations/${searchValue}`
     )
-    const json = await response.json() */
+    const json = await response.json() 
     setReservation(dummyReservationData)
   }
 
