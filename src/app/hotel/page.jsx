@@ -4,26 +4,40 @@ import React, { useState } from 'react'
 import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import Scanner from '../components/Scanner'
-import TicketTable from '../components/TicketTable'
+import ReservationTable from '../components/ReservationTable'
+
+const dummyReservationData = {
+  id: 1,
+  reservation_code: 'HT-0001',
+  start_date: '2024-03-30',
+  end_date: '2024-04-09',
+  asset_id: 1,
+  created_at: '2024-02-29T11:24:21.756Z',
+  updated_at: '2024-03-01T11:44:05.904Z',
+  price: '38000.0',
+  status: 'confirmed',
+  paid: false,
+  asset: {
+    id: 1,
+    name: 'Dagupan Suite',
+    asset_code: 'DGP-SU',
+    price: 3800.0,
+    created_at: '2024-02-29T11:24:21.708Z',
+    updated_at: '2024-02-29T11:24:21.708Z',
+    description: 'Luxurious suite with modern amenities.',
+  },
+}
 
 export default function Page() {
   const [searchValue, setSearchValue] = useState('')
+  const [reservation, setReservation] = useState(null)
 
-  const handleSubmit = async (qr) => {
-    alert(`${qr}`)
-  }
-
-  const ticket = {
-    id: 11,
-    ticket_date: '2024-02-29',
-    number_of_adults: 3,
-    number_of_children: 3,
-    status: 'confirmed',
-    created_at: '2024-02-28T02:29:33.465Z',
-    updated_at: '2024-02-28T02:29:33.465Z',
-    ticket_code: 'POOL-0005',
-    price: '1140.0',
-    paid: true,
+  const handleSubmit = async () => {
+    /*   const response = await fetch(
+      `http://localhost:3000/api/v1/reservations/${searchValue}`
+    )
+    const json = await response.json() */
+    setReservation(dummyReservationData)
   }
 
   return (
@@ -44,7 +58,7 @@ export default function Page() {
           Submit
         </button>
       </div>
-      <TicketTable ticket={ticket} />
+      {reservation && <ReservationTable reservation={reservation} />}
     </section>
   )
 }

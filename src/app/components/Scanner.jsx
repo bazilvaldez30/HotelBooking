@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import QrReader from 'react-qr-scanner'
 import { BsQrCodeScan } from 'react-icons/bs'
 
+
+
 export default function Scanner({ handleSubmit, searchValue, setSearchValue }) {
   const [error, setError] = useState(null)
   const [isScannerOpen, setIsScannerOpen] = useState(false)
