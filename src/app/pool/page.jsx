@@ -50,7 +50,7 @@ export default function Page() {
           </button>
         </div>
       )}
-      {ticket && <TicketTable ticket={ticket} />}
+      {ticket && <TicketTable ticket={ticket} searchValue={searchValue} />}
     </section>
   )
 }

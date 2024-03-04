@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ReservationTable({ reservation }) {
+export default function ReservationTable({ reservation, searchValue }) {
   return (
     <div className='overflow-x-auto max-w-sm md:max-w-3xl lg:max-w-7xl mx-12'>
       <table className='table-auto text-center'>

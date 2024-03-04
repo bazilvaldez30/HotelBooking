@@ -2,7 +2,32 @@ import Link from 'next/link'
 import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
 
-const TicketTable = ({ ticket }) => {
+const TicketTable = ({ ticket, searchValue }) => {
+
+  const handleChangeStatus = async (e) => {
+    try {
+      const status = e.target.value
+      const response = await fetch(
+        `http://localhost:3000/api/v1/tickets/${searchValue}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status }),
+        }
+      )
+      if (!response.ok) {
+        console.log('error')
+        throw new Error('Failed to update status')
+      }
+      const json = await response.json()
+      console.log(json)
+    } catch (error) {
+      console.error('Error updating status:', error)
+    }
+  }
+  
   return (
     <section className='mx-12'>
       <Link
@@ -49,13 +74,25 @@ const TicketTable = ({ ticket }) => {
         </table>
       </div>
       <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
-        <button className='px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md hover:scale-105'>
+        <button
+          onClick={(e) => handleChangeStatus(e)}
+          value='confirmed'
+          className='px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md hover:scale-105'
+        >
           Confirm
         </button>
-        <button className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'>
+        <button
+          onClick={(e) => handleChangeStatus(e)}
+          value='completed'
+          className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
+        >
           Complete
         </button>
-        <button className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'>
+        <button
+          onClick={(e) => handleChangeStatus(e)}
+          value='cancelled'
+          className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
+        >
           Cancel
         </button>
       </div>

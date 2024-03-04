@@ -58,7 +58,9 @@ export default function Page() {
           Submit
         </button>
       </div>
-      {reservation && <ReservationTable reservation={reservation} />}
+      {reservation && (
+        <ReservationTable reservation={reservation} searchValue={searchValue} />
+      )}
     </section>
   )
 }
