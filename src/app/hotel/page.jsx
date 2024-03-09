@@ -5,6 +5,8 @@ import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import Scanner from '../components/Scanner'
 import ReservationTable from '../components/ReservationTable'
+import { notification } from 'antd'
+import { FaPaperPlane } from 'react-icons/fa'
 
 const dummyReservationData = {
   id: 1,
@@ -39,7 +41,11 @@ export default function Page() {
       )
 
       if (!response.ok) {
-        throw new Error('Failed to fetch reservation data')
+        notification['error']({
+          placement: 'top',
+          message: 'No ticket found',
+        })
+        throw new Error('Failed to fetch ticket data')
       }
 
       const json = await response.json()
@@ -51,22 +57,26 @@ export default function Page() {
 
   return (
     <section className='flex flex-col min-h-screen items-center justify-center p-24 border-4 space-y-44'>
-      <div className='md:mx-auto px-12 md:px-0 space-y-5 w-[450px]'>
-        <BackButton />
-        <TitleHeader>Hotel scan</TitleHeader>
-        <Scanner
-          handleSubmit={handleSubmit}
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
+      {!reservation && (
+        <div className='md:mx-auto px-12 md:px-0 space-y-5 w-[450px]'>
+          <BackButton />
+          <TitleHeader>Hotel scan</TitleHeader>
+          <Scanner
+            handleSubmit={handleSubmit}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
 
-        <button
-          onClick={handleSubmit}
-          className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:opacity-70 disabled:cursor-not-allowed'
-        >
-          Submit
-        </button>
-      </div>
+          <button
+            disabled={!searchValue}
+            onClick={handleSubmit}
+            className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:bg-gray-600 disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 group'
+          >
+            Submit
+            <FaPaperPlane className='group-hover:-translate-y-1 group-hover:translate-x-1' />
+          </button>
+        </div>
+      )}
       {reservation && (
         <ReservationTable
           reservation={reservation}

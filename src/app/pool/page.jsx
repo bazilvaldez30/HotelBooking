@@ -6,6 +6,7 @@ import BackButton from '../components/BackButton'
 import Scanner from '../components/Scanner'
 import TicketTable from '../components/TicketTable'
 import { notification } from 'antd'
+import { FaPaperPlane } from 'react-icons/fa'
 
 const dummyTicket = {
   id: 11,
@@ -39,7 +40,7 @@ export default function Page() {
       }
 
       const json = await response.json()
-      setTicket(json)
+      setTicket(dummyTicket)
     } catch (error) {
       console.error('Error fetching ticket data:', error)
     }
@@ -59,9 +60,10 @@ export default function Page() {
           <button
             disabled={!searchValue}
             onClick={handleSubmit}
-            className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:opacity-70 disabled:cursor-not-allowed'
+            className='w-full bg-blue-600 hover:bg-blue-700 py-4 text-white font-semibold text-xl rounded-md disabled:bg-gray-600 disabled:opacity-80 disabled:cursor-not-allowed flex justify-center items-center gap-2 group'
           >
             Submit
+            <FaPaperPlane className='group-hover:-translate-y-1 group-hover:translate-x-1' />
           </button>
         </div>
       )}

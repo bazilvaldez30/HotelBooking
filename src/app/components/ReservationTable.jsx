@@ -1,4 +1,7 @@
+import Link from 'next/link'
 import React from 'react'
+import { MdKeyboardBackspace } from 'react-icons/md'
+import { convertDate } from '../lib/utils'
 
 export default function ReservationTable({
   reservation,
@@ -27,60 +30,104 @@ export default function ReservationTable({
       console.error('Error updating status:', error)
     }
   }
+
+  const handleBack = () => {
+    setReservation(null)
+  }
+
   return (
-    <section>
-      <div className='overflow-x-auto max-w-sm md:max-w-3xl lg:max-w-7xl mx-12'>
-        <table className='table-auto text-center'>
-          <thead>
-            <tr>
-              <th className='border px-6 py-2'>ID</th>
-              <th className='border px-6 py-2'>Reservation Code</th>
-              <th className='border px-6 py-2'>Start Date</th>
-              <th className='border px-6 py-2'>End Date</th>
-              <th className='border px-6 py-2'>Asset Name</th>
-              <th className='border px-6 py-2'>Price</th>
-              <th className='border px-6 py-2'>Status</th>
-              <th className='border px-6 py-2'>Created At</th>
-              <th className='border px-6 py-2'>Updated At</th>
-              <th className='border px-6 py-2'>Paid</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className='border px-6 py-2'>{reservation.id}</td>
-              <td className='border px-6 py-2'>
+    <section className='mx-12'>
+      <button
+        onClick={handleBack}
+        className='text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex w-fit items-center me-2 mb-2 gap-2 group'
+      >
+        <MdKeyboardBackspace className='w-7 h-7 group-hover:-translate-x-2' />
+        <span className='group-hover:translate-x-1'> Hotel</span>
+      </button>
+      <div className='overflow-x-auto w-[550px] mt-5'>
+        <div className='p-4 bg-white rounded-lg md:p-8 '>
+          <dl className='grid max-w-screen-xl gap-8 p-4 mx-auto text-gray-900 grid-cols-2 '>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>{reservation.id}</dt>
+              <dd className='text-gray-500'>ID</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
                 {reservation.reservation_code}
-              </td>
-              <td className='border px-6 py-2'>{reservation.start_date}</td>
-              <td className='border px-6 py-2'>{reservation.end_date}</td>
-              <td className='border px-6 py-2'>{reservation.asset.name}</td>
-              <td className='border px-6 py-2'>{reservation.price}</td>
-              <td className='border px-6 py-2'>{reservation.status}</td>
-              <td className='border px-6 py-2'>{reservation.created_at}</td>
-              <td className='border px-6 py-2'>{reservation.updated_at}</td>
-              <td className='border px-6 py-2'>
+              </dt>
+              <dd className='text-gray-500'>Reservation Code</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {' '}
+                {reservation.start_date}
+              </dt>
+              <dd className='text-gray-500'>Start Date</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {' '}
+                {reservation.end_date}
+              </dt>
+              <dd className='text-gray-500'>End Date</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {reservation.asset.name}
+              </dt>
+              <dd className='text-gray-500'>Asset Name</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {reservation.price}
+              </dt>
+              <dd className='text-gray-500'>Price</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold capitalize'>
+                {reservation.status}
+              </dt>
+              <dd className='text-gray-500'>Status</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {convertDate(reservation.created_at)}
+              </dt>
+              <dd className='text-gray-500'>Created At</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {convertDate(reservation.updated_at)}
+              </dt>
+              <dd className='text-gray-500'>Updated At</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
                 {reservation.paid ? 'Yes' : 'No'}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </dt>
+              <dd className='text-gray-500'>Paid</dd>
+            </div>
+          </dl>
+        </div>
       </div>
-      <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
-        <button
-          onClick={(e) => handleChangeStatus(e)}
-          value='completed'
-          className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
-        >
-          Complete
-        </button>
-        <button
-          onClick={(e) => handleChangeStatus(e)}
-          value='cancelled'
-          className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
-        >
-          Cancel
-        </button>
-      </div>
+      {reservation.status === 'confirmed' && (
+        <div className='flex  justify-center items-center mt-12 gap-8'>
+          <button
+            onClick={(e) => handleChangeStatus(e)}
+            value='completed'
+            className='px-9 py-2 md:w-auto bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
+          >
+            Complete
+          </button>
+          <button
+            onClick={(e) => handleChangeStatus(e)}
+            value='cancelled'
+            className='px-12 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </section>
   )
 }

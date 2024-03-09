@@ -9,6 +9,8 @@ import 'tippy.js/dist/tippy.css'
 import TitleHeader from '../components/TitleHeader'
 import BackButton from '../components/BackButton'
 import { Modal } from 'antd'
+import { FaCalendarDays } from 'react-icons/fa6'
+import { convertDate } from '../lib/utils'
 
 const dummyReservation = [
   {
@@ -45,7 +47,7 @@ const dummyReservation = [
     paid: false,
     asset: {
       id: 1,
-      name: 'Dagupan Suite',
+      name: 'Test Suite',
       asset_code: 'DGP-SU',
       price: 3800.0,
       created_at: '2024-02-29T11:24:21.708Z',
@@ -104,7 +106,11 @@ export default function Calendar() {
     <section>
       <div className='text-center py-[60px]'>
         <div className='mb-[40px]'>
-          <TitleHeader>Calendar</TitleHeader>
+          <TitleHeader>
+            <span className='flex items-center justify-center gap-3'>
+              <FaCalendarDays className='w-12 h-12' /> Calendar
+            </span>
+          </TitleHeader>
         </div>
 
         <div className='mx-auto max-w-screen-lg whitespace-pre-wrap'>
@@ -135,37 +141,73 @@ export default function Calendar() {
           width={600}
           footer={null}
         >
-          <div className='p-4 text-lg'>
-            <p className='mb-2'>
-              <strong>Reservation Code:</strong>{' '}
-              {selectedReservation.reservation_code}
-            </p>
-            <p className='mb-2'>
-              <strong>Asset Description:</strong>{' '}
-              {selectedReservation?.asset?.description}
-            </p>
-            <p className='mb-2'>
-              <strong>Start Date:</strong> {selectedReservation.start_date}
-            </p>
-            <p className='mb-2'>
-              <strong>End Date:</strong> {selectedReservation.end_date}
-            </p>
-            <p className='mb-2'>
-              <strong>Price:</strong> {selectedReservation.price}
-            </p>
-            <p className='mb-2'>
-              <strong>Status:</strong> {selectedReservation.status}
-            </p>
-            <p className='mb-2'>
-              <strong>Paid:</strong> {selectedReservation.paid ? 'Yes' : 'No'}
-            </p>
-            <p className='mb-2'>
-              <strong>Asset Name:</strong> {selectedReservation?.asset?.name}
-            </p>
-            <p className='mb-2'>
-              <strong>Asset Code:</strong>{' '}
-              {selectedReservation?.asset?.asset_code}
-            </p>
+          <div className='overflow-x-auto w-[550px] mt-5'>
+            <div className='p-4 bg-white rounded-lg md:p-8 '>
+              <dl className='grid max-w-screen-xl gap-8 p-4 mx-auto text-gray-900 grid-cols-2 '>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {selectedReservation.id}
+                  </dt>
+                  <dd className='text-gray-500'>ID</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {selectedReservation.reservation_code}
+                  </dt>
+                  <dd className='text-gray-500'>Reservation Code</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {' '}
+                    {selectedReservation.start_date}
+                  </dt>
+                  <dd className='text-gray-500'>Start Date</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {' '}
+                    {selectedReservation.end_date}
+                  </dt>
+                  <dd className='text-gray-500'>End Date</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {selectedReservation?.asset?.name}
+                  </dt>
+                  <dd className='text-gray-500'>Asset Name</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {selectedReservation.price}
+                  </dt>
+                  <dd className='text-gray-500'>Price</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold capitalize'>
+                    {selectedReservation.status}
+                  </dt>
+                  <dd className='text-gray-500'>Status</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {convertDate(selectedReservation.created_at)}
+                  </dt>
+                  <dd className='text-gray-500'>Created At</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {convertDate(selectedReservation.updated_at)}
+                  </dt>
+                  <dd className='text-gray-500'>Updated At</dd>
+                </div>
+                <div className='flex flex-col items-center justify-center'>
+                  <dt className='mb-2 text-xl font-extrabold'>
+                    {selectedReservation.paid ? 'Yes' : 'No'}
+                  </dt>
+                  <dd className='text-gray-500'>Paid</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </Modal>
       )}

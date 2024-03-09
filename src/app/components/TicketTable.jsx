@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
+import { convertDate } from '../lib/utils'
 
 const TicketTable = ({ ticket, setTicket, searchValue }) => {
   const handleChangeStatus = async (e) => {
@@ -28,64 +29,95 @@ const TicketTable = ({ ticket, setTicket, searchValue }) => {
     }
   }
 
+  const handleBack = () => {
+    setTicket(null)
+  }
+
   return (
     <section className='mx-12'>
-      <Link
-        href={'/'}
-        className='flex gap-2 items-center hover:bg-blue-200 w-fit py-2 px-2 pe-4 text-lg mb-5'
+      <button
+        onClick={handleBack}
+        className='text-white bg-[#3b5998] hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex w-fit items-center me-2 mb-2 gap-2 group'
       >
-        <MdKeyboardBackspace className='w-7 h-7' />
-        Pool
-      </Link>
-      <div className='overflow-x-auto max-w-sm md:max-w-3xl lg:max-w-7xl '>
-        <table className='table-auto text-center'>
-          <thead>
-            <tr>
-              <th className='border-2 px-6 py-2'>ID</th>
-              <th className='border-2 px-6 py-2'>Ticket Date</th>
-              <th className='border-2 px-6 py-2'>Adults</th>
-              <th className='border-2 px-6 py-2'>Children</th>
-              <th className='border-2 px-6 py-2'>Status</th>
-              <th className='border-2 px-6 py-2'>Created At</th>
-              <th className='border-2 px-6 py-2'>Updated At</th>
-              <th className='border-2 px-6 py-2'>Ticket Code</th>
-              <th className='border-2 px-6 py-2'>Price</th>
-              <th className='border-2 px-6 py-2'>Paid</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className='border-2 px-6 py-2'>{ticket.id}</td>
-              <td className='border-2 px-6 py-2'>{ticket.ticket_date}</td>
-              <td className='border-2 px-6 py-2'>{ticket.number_of_adults}</td>
-              <td className='border-2 px-6 py-2'>
-                {ticket.number_of_children}
-              </td>
-              <td className='border-2 px-6 py-2'>{ticket.status}</td>
-              <td className='border-2 px-6 py-2'>{ticket.created_at}</td>
-              <td className='border-2 px-6 py-2'>{ticket.updated_at}</td>
-              <td className='border-2 px-6 py-2'>{ticket.ticket_code}</td>
-              <td className='border-2 px-6 py-2'>{ticket.price}</td>
-              <td className='border-2 px-6 py-2'>
+        <MdKeyboardBackspace className='w-7 h-7 group-hover:-translate-x-2' />
+        <span className='group-hover:translate-x-1'> Pool</span>
+      </button>
+      <div className='overflow-x-auto w-[550px] mt-5'>
+        <div className='p-4 bg-white rounded-lg md:p-8 '>
+          <dl className='grid max-w-screen-xl gap-8 p-4 mx-auto text-gray-900 grid-cols-2 '>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>{ticket.id}</dt>
+              <dd className='text-gray-500'>ID</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {ticket.ticket_code}
+              </dt>
+              <dd className='text-gray-500'>Ticket Code</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {ticket.ticket_date}
+              </dt>
+              <dd className='text-gray-500'>Ticket Date</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {ticket.number_of_adults} Adults
+              </dt>
+              <dd className='text-gray-500'>Adults</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {ticket.number_of_children} Children
+              </dt>
+              <dd className='text-gray-500'>Children</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>{ticket.price}</dt>
+              <dd className='text-gray-500'>Price</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold capitalize'>
+                {ticket.status}
+              </dt>
+              <dd className='text-gray-500'>Status</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {convertDate(ticket.created_at)}
+              </dt>
+              <dd className='text-gray-500'>Created At</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
+                {convertDate(ticket.updated_at)}
+              </dt>
+              <dd className='text-gray-500'>Updated At</dd>
+            </div>
+            <div className='flex flex-col items-center justify-center'>
+              <dt className='mb-2 text-xl font-extrabold'>
                 {ticket.paid ? 'Yes' : 'No'}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </dt>
+              <dd className='text-gray-500'>Paid</dd>
+            </div>
+          </dl>
+        </div>
       </div>
+
       {ticket.status === 'confirmed' && (
-        <div className='grid md:grid-cols-3 grid-cols-1 md:max-w-[500px] mx-12 md:mx-auto gap-8 mt-12'>
+        <div className='flex  justify-center items-center mt-12 gap-8'>
           <button
             onClick={(e) => handleChangeStatus(e)}
             value='completed'
-            className='px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
+            className='px-9 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md hover:scale-105'
           >
             Complete
           </button>
           <button
             onClick={(e) => handleChangeStatus(e)}
             value='cancelled'
-            className='px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
+            className='px-12 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md hover:scale-105'
           >
             Cancel
           </button>
