@@ -37,7 +37,7 @@ export default function Page() {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/reservations/${searchValue}`
+        `https://dog.silverconcha-beta.c66.me/api/v1/reservations/${searchValue}`
       )
 
       if (!response.ok) {

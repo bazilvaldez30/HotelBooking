@@ -65,10 +65,12 @@ export default function Calendar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      /* const response = await fetch('http://localhost:3000/api/v1/reservations')
-      const reservations = await response.json() */
+      const response = await fetch(
+        'https://dog.silverconcha-beta.c66.me/api/v1/reservations'
+      )
+      const reservations = await response.json()
 
-      const calendarEvents = dummyReservation.map((reservation) => ({
+      const calendarEvents = reservations.map((reservation) => ({
         id: reservation.id,
         title: reservation.reservation_code,
         start: reservation.start_date,
@@ -76,7 +78,7 @@ export default function Calendar() {
       }))
 
       setCalendarEvents(calendarEvents)
-      setReservationsData(dummyReservation)
+      setReservationsData(reservations)
     }
 
     fetchData()

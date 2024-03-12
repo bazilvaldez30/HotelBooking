@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
 import { convertDate } from '../lib/utils'
+import { notification } from 'antd'
 
 export default function ReservationTable({
   reservation,
@@ -12,7 +13,7 @@ export default function ReservationTable({
     try {
       const status = e.target.value
       const response = await fetch(
-        `http://localhost:3000/api/v1/reservations/${searchValue}`,
+        `https://dog.silverconcha-beta.c66.me/api/v1/reservations/${searchValue}`,
         {
           method: 'PATCH',
           headers: {
@@ -25,7 +26,11 @@ export default function ReservationTable({
         throw new Error('Failed to update status')
       }
       const json = await response.json()
-      setReservation(json)
+      setReservation(json.reservation)
+      notification['success']({
+        placement: 'top',
+        message: 'Status updated successfully',
+      })
     } catch (error) {
       console.error('Error updating status:', error)
     }
@@ -73,7 +78,7 @@ export default function ReservationTable({
             </div>
             <div className='flex flex-col items-center justify-center'>
               <dt className='mb-2 text-xl font-extrabold'>
-                {reservation.asset.name}
+                {reservation?.asset?.name}
               </dt>
               <dd className='text-gray-500'>Asset Name</dd>
             </div>

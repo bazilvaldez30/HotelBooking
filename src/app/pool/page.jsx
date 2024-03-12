@@ -27,8 +27,9 @@ export default function Page() {
 
   const handleSubmit = async () => {
     try {
+      console.log(process.env.API_ENDPOINT)
       const response = await fetch(
-        `http://localhost:3000/api/v1/tickets/${searchValue}`
+        `https://dog.silverconcha-beta.c66.me/api/v1/tickets/${searchValue}`
       )
 
       if (!response.ok) {

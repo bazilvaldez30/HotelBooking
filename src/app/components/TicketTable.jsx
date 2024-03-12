@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { MdKeyboardBackspace } from 'react-icons/md'
 import { convertDate } from '../lib/utils'
+import { notification } from 'antd'
 
 const TicketTable = ({ ticket, setTicket, searchValue }) => {
   const handleChangeStatus = async (e) => {
@@ -9,7 +10,7 @@ const TicketTable = ({ ticket, setTicket, searchValue }) => {
       const status = e.target.value
       console.log(status)
       const response = await fetch(
-        `http://localhost:3000/api/v1/tickets/${searchValue}`,
+        `https://dog.silverconcha-beta.c66.me/api/v1/tickets/${searchValue}`,
         {
           method: 'PATCH',
           headers: {
@@ -23,7 +24,11 @@ const TicketTable = ({ ticket, setTicket, searchValue }) => {
         throw new Error('Failed to update status')
       }
       const json = await response.json()
-      setTicket(json)
+      setTicket(json.ticket)
+      notification['success']({
+        placement: 'top',
+        message: 'Status updated successfully',
+      })
     } catch (error) {
       console.error('Error updating status:', error)
     }
