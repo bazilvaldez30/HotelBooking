@@ -3,11 +3,14 @@ import TitleHeader from './components/TitleHeader'
 import { FaSwimmingPool } from 'react-icons/fa'
 import { FaHotel } from 'react-icons/fa6'
 import { FaCalendarDays } from 'react-icons/fa6'
+import Image from 'next/image'
+import LogoImage from './components/LogoImage'
 
 export default function Home() {
   return (
-    <main className='flex min-h-screen items-center justify-between p-24'>
+    <main className='flex min-h-screen items-center justify-between p-24 md:pt-0'>
       <div className='mx-auto space-y-12 text-center'>
+        <LogoImage />
         <TitleHeader>DASHBOARD</TitleHeader>
         <div className='grid md:grid-cols-3 gap-6 text-xl font-semibold'>
           <Link

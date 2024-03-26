@@ -7,6 +7,7 @@ import Scanner from '../components/Scanner'
 import TicketTable from '../components/TicketTable'
 import { notification } from 'antd'
 import { FaPaperPlane } from 'react-icons/fa'
+import LogoImage from '../components/LogoImage'
 
 const dummyTicket = {
   id: 11,
@@ -48,7 +49,8 @@ export default function Page() {
   }
 
   return (
-    <section className='flex flex-col min-h-screen items-center justify-center p-24 border-4 space-y-44'>
+    <section className='flex flex-col min-h-screen items-center justify-center p-24 md:pt-0 border-4 space-y-16'>
+      <LogoImage />
       {!ticket && (
         <div className='mx-auto space-y-5 w-[450px]'>
           <BackButton />

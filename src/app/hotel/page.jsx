@@ -7,6 +7,7 @@ import Scanner from '../components/Scanner'
 import ReservationTable from '../components/ReservationTable'
 import { notification } from 'antd'
 import { FaPaperPlane } from 'react-icons/fa'
+import LogoImage from '../components/LogoImage'
 
 const dummyReservationData = {
   id: 1,
@@ -56,7 +57,8 @@ export default function Page() {
   }
 
   return (
-    <section className='flex flex-col min-h-screen items-center justify-center p-24 border-4 space-y-44'>
+    <section className='flex flex-col min-h-screen items-center justify-center p-24 md:pt-0 border-4 space-y-16'>
+      <LogoImage />
       {!reservation && (
         <div className='md:mx-auto px-12 md:px-0 space-y-5 w-[450px]'>
           <BackButton />
