@@ -9,19 +9,6 @@ import { notification } from 'antd'
 import { FaPaperPlane } from 'react-icons/fa'
 import LogoImage from '../components/LogoImage'
 
-const dummyTicket = {
-  id: 11,
-  ticket_date: '2024-02-29',
-  number_of_adults: 3,
-  number_of_children: 3,
-  status: 'confirmed',
-  created_at: '2024-02-28T02:29:33.465Z',
-  updated_at: '2024-02-28T02:29:33.465Z',
-  ticket_code: 'POOL-0005',
-  price: '1140.0',
-  paid: true,
-}
-
 export default function Page() {
   const [searchValue, setSearchValue] = useState('')
   const [ticket, setTicket] = useState(null)
@@ -42,7 +29,7 @@ export default function Page() {
       }
 
       const json = await response.json()
-      setTicket(dummyTicket)
+      setTicket(json)
     } catch (error) {
       console.error('Error fetching ticket data:', error)
     }
