@@ -4,7 +4,7 @@ import { BsQrCodeScan } from 'react-icons/bs'
 
 
 
-export default function Scanner({ handleSubmit, searchValue, setSearchValue }) {
+export default function Scanner({ searchValue, setSearchValue }) {
   const [error, setError] = useState(null)
   const [isScannerOpen, setIsScannerOpen] = useState(false)
 
@@ -17,7 +17,6 @@ export default function Scanner({ handleSubmit, searchValue, setSearchValue }) {
       if (data) {
         const qrValue = data.text
         setSearchValue(qrValue)
-        handleSubmit(qrValue)
         setIsScannerOpen(false)
         console.log(data)
       }
