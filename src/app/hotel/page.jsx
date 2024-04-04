@@ -41,6 +41,8 @@ export default function Page() {
         `https://dog.silverconcha-beta.c66.me/api/v1/reservations/${searchValue}`
       )
 
+      console.log(response)
+
       if (!response.ok) {
         notification['error']({
           placement: 'top',
@@ -64,7 +66,6 @@ export default function Page() {
           <BackButton />
           <TitleHeader>Hotel scan</TitleHeader>
           <Scanner
-            handleSubmit={handleSubmit}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
           />
