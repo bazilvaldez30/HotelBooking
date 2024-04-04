@@ -12,7 +12,7 @@ import LogoImage from '../components/LogoImage'
 export default function Page() {
   const [searchValue, setSearchValue] = useState('')
   const [ticket, setTicket] = useState(null)
-
+  console.log(ticket)
   const handleSubmit = async () => {
     try {
       console.log(process.env.API_ENDPOINT)
@@ -43,7 +43,6 @@ export default function Page() {
           <BackButton />
           <TitleHeader>Pool scan</TitleHeader>
           <Scanner
-            handleSubmit={handleSubmit}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
           />
